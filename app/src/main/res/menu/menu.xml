@@ -4,20 +4,17 @@
     <item
         android:title="home"
         android:id="@+id/menuhome"
-        android:orderInCategory="100"
-        app:showAsAction="ifRoom">
+        android:orderInCategory="100">
 </item>
     <item
         android:title="login"
         android:id="@+id/menulogin"
-        android:orderInCategory="200"
-        app:showAsAction="ifRoom">
+        android:orderInCategory="200">
     </item>
     <item
         android:title="dash"
         android:id="@+id/menudash"
-        android:orderInCategory="300"
-        app:showAsAction="ifRoom">
+        android:orderInCategory="300">
     </item>
 
 </menu>

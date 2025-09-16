@@ -3,6 +3,7 @@ package com.example.m11;
 import static java.security.AccessController.getContext;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -15,15 +16,33 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import java.util.zip.Inflater;
 
 public class MainActivity2 extends AppCompatActivity {
     Button log;
     EditText name,pass;
+    BottomNavigationView menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
+        menu=findViewById(R.id.bottom_navigation);
+        menu.setOnItemSelectedListener(item -> {
+            int id = item.getItemId();
+            if (id == R.id.menuhome) {
+                // Stay on current activity or do something
+                return true;
+            } else if (id == R.id.menulogin) {
+                // Use intent to navigate to SecondActivity
+                Intent intent = new Intent(MainActivity2.this, MainActivity3.class);
+                startActivity(intent);
+                return true;
+            }
+            return false;
+        });
         EditText name =findViewById(R.id.name);
         EditText pass = findViewById(R.id.pass);
         log=findViewById(R.id.log);
@@ -40,6 +59,7 @@ public class MainActivity2 extends AppCompatActivity {
                     Toast.makeText(this, "wrong info", Toast.LENGTH_SHORT).show();
                 }
             }
+
 
     }
 
