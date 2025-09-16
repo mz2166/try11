@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(MainActivity.this, MainActivity2.class);
                     startActivity(intent);
                     return true;
-
                 }
                 if (id == R.id.menudash) {
                     // Use intent to navigate to SecondActivity
