@@ -20,38 +20,36 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
         myNav=findViewById(R.id.bottom_navigation);
-
-        myNav.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int id = item.getItemId();
-                if (id == R.id.menuhome) {
-                    // Stay on current activity or do something
-                    return true;
-                } else if (id == R.id.menulogin) {
-                    // Use intent to navigate to SecondActivity
-                    Intent intent = new Intent(MainActivity.this, MainActivity2.class);
-                    startActivity(intent);
-                    return true;
-                }
-                if (id == R.id.menudash) {
-                    // Use intent to navigate to SecondActivity
-                    Intent intent = new Intent(MainActivity.this, MainActivity3.class);
-                    startActivity(intent);
-                    return true;
-                }
-                return false;
+        myNav.setOnItemSelectedListener(item ->  {
+            int id = item.getItemId();
+            if (id == R.id.menuhome) {
+                Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                startActivity(intent);
+                return true;
             }
+            if (id == R.id.menulogin) {
+                Intent intent = new Intent(MainActivity.this, MainActivity2.class);
+                startActivity(intent);
+                return true;
+            }
+            if (id == R.id.menudash) {
+                Intent intent = new Intent(MainActivity.this, MainActivity3.class);
+                startActivity(intent);
+                return true;
+            }
+
+            return false;
         });
 
 
 
 
-        }
+    }
 
 
 
 
 
-        }
+}

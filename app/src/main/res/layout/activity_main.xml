@@ -13,11 +13,13 @@
         android:layout_height="0dp"
         android:layout_weight="9.3">
         <TextView
+            android:layout_marginTop="50dp"
+            android:gravity="center"
             android:layout_width="150dp"
             android:layout_height="70dp"
             android:layout_gravity="center"
             android:text="home"
-            android:textSize="40dp">
+            android:textSize="40sp">
         </TextView>
 
     </LinearLayout>
