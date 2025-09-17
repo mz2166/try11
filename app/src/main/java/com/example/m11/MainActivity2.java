@@ -28,74 +28,76 @@ public class MainActivity2 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences preferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+
+        if (preferences.getString("uname", null) == null) {
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putString("uname", "admin");   // default username
+            editor.putString("pas", "1234");      // default password
+            editor.apply();
+        }
+
+        boolean isLoggedIn = preferences.getBoolean("isLoggedIn", false);
+
+        if (isLoggedIn) {
+            // Skip login if already logged in
+            Intent intent = new Intent(MainActivity2.this, MainActivity3.class);
+            startActivity(intent);
+            finish();
+            return;
+        }
+
+        setContentView(R.layout.activity_main2);
+
         EditText name = findViewById(R.id.name);
         EditText pass = findViewById(R.id.pass);
-        Button log=findViewById(R.id.log);
-        setContentView(R.layout.activity_main2);
+        Button log = findViewById(R.id.log);
         menu = findViewById(R.id.bottom_navigation);
+
         menu.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
             if (id == R.id.menuhome) {
-                Intent intent = new Intent(MainActivity2.this, MainActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(MainActivity2.this, MainActivity.class));
                 return true;
             }
             if (id == R.id.menulogin) {
-                Intent intent = new Intent(MainActivity2.this, MainActivity2.class);
-                startActivity(intent);
+                // Already here, do nothing
                 return true;
             }
             if (id == R.id.menudash) {
-                Intent intent = new Intent(MainActivity2.this, MainActivity3.class);
-                startActivity(intent);
+                startActivity(new Intent(MainActivity2.this, MainActivity3.class));
                 return true;
             }
-
             return false;
         });
-        SharedPreferences preferences=getSharedPreferences("UserPrefs",MODE_PRIVATE);
-        log.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String uname = name.getText().toString().trim();
-                String pas = pass.getText().toString().trim();
-                SharedPreferences.Editor edetor = preferences.edit();
-                if (uname.isEmpty() || pas.isEmpty()) {
-                    Toast.makeText(MainActivity2.this, "Please fill in both fields", Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    edetor.putString("uname",uname);
-                    edetor.putString("pas",pas);
-                    edetor.apply();
-                }
-            }
-        });
-        log.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String saved_username = preferences.getString("uname",null);
-                String saved_password = preferences.getString("pas",null);
 
-                String username = name.getText().toString().trim();
-                String password = pass.getText().toString().trim();
-                if (username.isEmpty() || password.isEmpty()) {
-                    Toast.makeText(MainActivity2.this, "Please fill in both fields", Toast.LENGTH_SHORT).show();
+        log.setOnClickListener(v -> {
+            String saved_username = preferences.getString("uname", null);
+            String saved_password = preferences.getString("pas", null);
+
+            String username = name.getText().toString().trim();
+            String password = pass.getText().toString().trim();
+
+            if (username.isEmpty() || password.isEmpty()) {
+                Toast.makeText(MainActivity2.this, "Please fill all the fields", Toast.LENGTH_SHORT).show();
+            } else {
+                if (saved_username != null && saved_password != null
+                        && saved_username.equals(username) && saved_password.equals(password)) {
+                    Toast.makeText(MainActivity2.this, "Logged in succesfully", Toast.LENGTH_SHORT).show();
+
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putBoolean("isLoggedIn", true);
+                    editor.apply();
+
+                    Intent intent = new Intent(MainActivity2.this, MainActivity3.class);
+                    intent.putExtra("username", username);
+                    startActivity(intent);
+                    finish();
                 } else {
-                    if (saved_username.equals(username)&&saved_password.equals(password)) {
-                        Toast.makeText(MainActivity2.this, "Logged in successfully", Toast.LENGTH_SHORT).show();
-                        SharedPreferences.Editor editor = preferences.edit();
-                        editor.putBoolean("isLoggedIn", true);
-                        Intent intent = new Intent(MainActivity2.this, MainActivity3.class);
-                        startActivity(intent);
-                        finish();
-                    }
-                    else {
-                        Toast.makeText(MainActivity2.this, "sign up first", Toast.LENGTH_SHORT).show();
-                    }
+                    Toast.makeText(MainActivity2.this, "you need to Sign up", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
-
 
 }
