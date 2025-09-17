@@ -32,8 +32,8 @@ public class MainActivity2 extends AppCompatActivity {
 
         if (preferences.getString("uname", null) == null) {
             SharedPreferences.Editor editor = preferences.edit();
-            editor.putString("uname", "admin");   // default username
-            editor.putString("pas", "1234");      // default password
+            editor.putString("uname", "admin");
+            editor.putString("pas", "1234");
             editor.apply();
         }
 
